@@ -20,6 +20,7 @@ services:
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
+      # Any length works; or paste: openssl rand -base64 48
       - key: APP_JWT_SECRET
         generateValue: true
       # In Dashboard → nettopo-api → Environment, add:
