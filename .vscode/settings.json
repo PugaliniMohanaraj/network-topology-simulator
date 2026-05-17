@@ -1,0 +1,10 @@
+{
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.import.maven.enabled": true,
+  "java.jdt.ls.lombokSupport.enabled": true,
+  "java.compile.nullAnalysis.mode": "disabled",
+  "files.exclude": {
+    "**/frontend/node_modules": true,
+    "**/frontend/dist": true
+  }
+}

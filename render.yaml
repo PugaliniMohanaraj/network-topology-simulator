@@ -1,0 +1,53 @@
+# Optional: deploy entire stack from Render Dashboard → Blueprints → New Blueprint Instance
+# Repo: connect your GitHub repo, branch main, then apply this file.
+#
+# After deploy, set APP_CORS_ORIGINS on the API to your Static Site URL (see README / deploy notes).
+
+databases:
+  - name: nettopo-db
+    databaseName: networkdb
+    user: nettopo
+    plan: free
+
+services:
+  - type: web
+    name: nettopo-api
+    runtime: docker
+    plan: free
+    dockerfilePath: network-simulator/Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: APP_JWT_SECRET
+        generateValue: true
+      # In Dashboard → nettopo-api → Environment, add:
+      # SPRING_DATASOURCE_URL=jdbc:postgresql://<INTERNAL_HOST>:5432/networkdb
+      # (Internal host is on the PostgreSQL service → Connect tab)
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: nettopo-db
+          property: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: nettopo-db
+          property: password
+      # Set after frontend is live, e.g. https://nettopo-web.onrender.com
+      - key: APP_CORS_ORIGINS
+        sync: false
+
+  - type: web
+    name: nettopo-web
+    runtime: static
+    plan: free
+    buildCommand: cd frontend && npm ci && npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      # Set to https://nettopo-api.onrender.com (your API service URL, no trailing slash)
+      - key: VITE_API_URL
+        sync: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
