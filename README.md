@@ -95,4 +95,8 @@ Created automatically on first backend startup.
 
 ## Author
 
-Add your name, GitHub link, and LinkedIn here before submitting applications.
+PUGALINI MOHANARAJ
+UNDERGRADUATE
+DEPARTMENT OF COMPUTER ENGINEERING
+FACULTY OF ENGINEERING 
+UNIVERSITY OF JAFFNA
