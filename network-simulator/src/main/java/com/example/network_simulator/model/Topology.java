@@ -22,11 +22,9 @@ public class Topology {
     @Column(nullable = false)
     private Long userId;
 
-    @Lob
     @Column(columnDefinition = "TEXT")
     private String nodesJson;
 
-    @Lob
     @Column(columnDefinition = "TEXT")
     private String edgesJson;
 
